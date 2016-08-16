@@ -46,21 +46,57 @@ describe ConnectFour do
 
   describe "#tick_box" do
 
-  	it "lets current player tick a box with positions of 0,0" do
-  		allow(@move = @cf.tick_box(0,0))
-  		expect(@board[0][0]).to eq "X"
+  	it "lets current player tick a box with the first position of 0th column" do
+  		allow(@move = @cf.tick_box(0))
+  		expect(@board[5][0]).to eq "X"
   	end
 
-  	it "lets second player in 2nd round tick a box with positions of 5,6" do
-  		allow(@current_player = @player2)
-  		allow(@move = @cf.tick_box(5,6, @current_player))
-  		expect(@board[5][6]).to eq "O"
+  	it "stacks the ticked boxes" do
+  		allow(@board[5][0] = "X")
+  		allow(@move = @cf.tick_box(0))
+  		expect(@board[4][0]).to eq "X"
   	end
 
-  	it "does not allow for a change in the board if the box is not empty" do
-  		allow(@board[0][0] = "X")
-  		expect(@cf.tick_box(0,0)).to eq "You are not allowed to make that move"
+  end
+
+  describe "#check_win" do
+
+  	it "gives no winner if there is no winner" do
+  		expect(@cf.check_win).to be false
   	end
+
+  	it "checks for the current player win if there are 4 same boxes ticked in series" do
+  		allow(@board[5][0] = "X")
+  		allow(@board[5][1] = "X")
+  		allow(@board[5][2] = "X")
+  		allow(@board[5][3] = "X")
+  		expect(@cf.check_win).to eq @player1
+  	end
+
+  	it "checks for the current player win if there are 4 same boxes ticked on top of one another" do
+  		allow(@board[5][0] = "X")
+  		allow(@board[4][0] = "X")
+  		allow(@board[3][0] = "X")
+  		allow(@board[2][0] = "X")
+  		expect(@cf.check_win).to eq @player1
+  	end
+
+  	it "checks for the current player win if there are 4 same boxes ticked in diagonal" do
+  		allow(@board[5][0] = "X")
+  		allow(@board[4][1] = "X")
+  		allow(@board[3][2] = "X")
+  		allow(@board[1][3] = "X")
+  		expect(@cf.check_win).to eq @player1
+  	end
+
+  	# it "checks for the current player win if there are 4 same booxes ticked in the left diagonal" do
+  	# 	allow(@board[5][5] = "X")
+  	# 	allow(@board[4][4] = "X")
+  	# 	allow(@board[3][3] = "X")
+  	# 	allow(@board[2][2] = "X")
+  	# 	expect(@cf.check_win).to eq @player1
+  	# end
+
   end
 
 end
