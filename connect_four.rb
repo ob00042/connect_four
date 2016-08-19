@@ -14,11 +14,11 @@ class ConnectFour
   	@board
   end
 
-  def tick_box(x, player = @current_player)
+  def tick_box(x)
   	i = 5
   	while i > -1
   		if @board[i][x] == "-"
-  			@board[i][x] = player
+  			@board[i][x] = @current_player
   			return
   		else
   			i -= 1
@@ -78,7 +78,7 @@ class ConnectFour
   				count1, count2, count3, count4 = 1, 1, 1, 1
   				while i < 4 	
 
-  					if count1 > 0 && @board[row+i][column+i] == @current_player && row + i < 6 && column + i < 7
+  					if count1 > 0 && row + i < 6 && column + i < 7 && @board[row+i][column+i] == @current_player 
   						count1 += 1
   						if count1 == 4
   							@winner = @current_player
@@ -87,9 +87,8 @@ class ConnectFour
   					else
   						count1 = 0
   					end
-  					
 
-  					if count2 > 0 && @board[row-i][column-i] == @current_player && row - i > -1 && column -i > -1
+  					if count2 > 0 && row - i > -1 && column -i > -1 && @board[row-i][column-i] == @current_player
   						count2 += 1
   						if count2 == 4
   							@winner = @current_player
@@ -98,9 +97,8 @@ class ConnectFour
   					else
   						count2 = 0
   					end
-  					
 
-  					if count3 > 0 && @board[row+i][column-i] == @current_player && row + i < 6 && column - i > -1
+  					if count3 > 0 && row + i < 6 && column - i > -1 && @board[row+i][column-i] == @current_player
   						count3 += 1
   						if count3 == 4
   							@winner = @current_player
@@ -109,9 +107,8 @@ class ConnectFour
   					else
   						count3 = 0
   					end
-  					
 
-  					if count4 > 0 && @board[row-i][column+i] == @current_player && row - i > -1 && column + i < 7
+  					if count4 > 0 && row - i > -1 && column + i < 7 && @board[row-i][column+i] == @current_player
   						count4 += 1
   						if count4 == 4
   							@winner = @current_player
@@ -120,7 +117,6 @@ class ConnectFour
   					else
   						count4 = 0
   					end
-  					
 
   					i += 1
 
@@ -133,8 +129,29 @@ class ConnectFour
 
   	@winner
   	
+  end
 
+  def game
+  	puts "Let's play Connect Four!"
+  	puts "Player1 will have 'X' and Player2 will have 'O'"
+  	20.times do
+  		@board.each{ |l| p l }
+  		if @round % 2 == 0
+  			@current_player = @player1
+  		else
+  			@current_player = @player2
+  		end
+  		puts "Which column would you like to drop your coin? (0 - 6)"
+  		column = gets.chomp
+  		tick_box(column.to_i)
+  		check_win
+  		break if @winner != false
+  		@round += 1
+  	end
 
   end
 
 end
+
+cf = ConnectFour.new
+cf.game
