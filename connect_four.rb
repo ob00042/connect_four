@@ -149,6 +149,8 @@ class ConnectFour
   		@round += 1
   	end
 
+  	puts "The winner is the player with #{@current_player}"
+
   end
 
 end
