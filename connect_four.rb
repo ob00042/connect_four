@@ -28,6 +28,8 @@ class ConnectFour
   end
 
   def check_win
+
+  	@winner = false
   	
   	row = 0 #4 straight in series
   	while row < 6 
@@ -42,8 +44,6 @@ class ConnectFour
   	    if series_count == 4
   	    	@winner = @current_player
   	    	return @winner
-  	    else
-  	     	@winner = false
   	    end
   	    column += 1
   	  end
@@ -63,8 +63,6 @@ class ConnectFour
   			if top_count == 4
   				@winner = @current_player
   				return @winner
-  			else
-  				@winner = false
   			end
   			row += 1
   		end
@@ -74,60 +72,55 @@ class ConnectFour
   	row = 0 #diagonals
   	while row < 6
   		column = 0
-  		diagonal_count = 0
   		while column < 7
   			if @board[row][column] == @current_player
   				i = 1
   				count1, count2, count3, count4 = 1, 1, 1, 1
-  				while i < 4
+  				while i < 4 	
 
-  					if !@board[row+i][column+i].nil? && count1 > 0 && @board[row+i][column+i] == @current_player
+  					if count1 > 0 && @board[row+i][column+i] == @current_player && row + i < 6 && column + i < 7
   						count1 += 1
+  						if count1 == 4
+  							@winner = @current_player
+  							return @winner
+  						end
   					else
   						count1 = 0
   					end
-  					if count1 == 4
-  						@winner = @current_player
-  						return @winner
-  					else
-  						@winner = false
-  					end
+  					
 
-  					if !@board[row-i][column-i].nil? && count2 > 0 && @board[row-i][column-i] == @current_player
+  					if count2 > 0 && @board[row-i][column-i] == @current_player && row - i > -1 && column -i > -1
   						count2 += 1
+  						if count2 == 4
+  							@winner = @current_player
+  							return @winner
+  						end
   					else
   						count2 = 0
   					end
-  					if count2 == 4
-  						@winner = @current_player
-  						return @winner
-  					else
-  						@winner = false
-  					end
+  					
 
-  					if !@board[row+i][column-i].nil? && count3 > 0 && @board[row+i][column-i] == @current_player
+  					if count3 > 0 && @board[row+i][column-i] == @current_player && row + i < 6 && column - i > -1
   						count3 += 1
+  						if count3 == 4
+  							@winner = @current_player
+  							return @winner
+  						end
   					else
   						count3 = 0
   					end
-  					if count3 == 4
-  						@winner = @current_player
-  						return @winner
-  					else
-  						@winner = false
-  					end
+  					
 
-  					if !@board[row-i][column+i].nil? && count4 > 0 && @board[row-i][column+i] == @current_player
+  					if count4 > 0 && @board[row-i][column+i] == @current_player && row - i > -1 && column + i < 7
   						count4 += 1
+  						if count4 == 4
+  							@winner = @current_player
+  							return @winner
+  						end
   					else
   						count4 = 0
   					end
-  					if count4 == 4
-  						@winner = @current_player
-  						return @winner
-  					else
-  						@winner = false
-  					end
+  					
 
   					i += 1
 

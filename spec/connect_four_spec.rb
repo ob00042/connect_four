@@ -82,10 +82,10 @@ describe ConnectFour do
   	end
 
   	it "checks for the current player win if there are 4 same boxes ticked in diagonal" do
-  		allow(@board[5][0] = "X")
-  		allow(@board[4][1] = "X")
-  		allow(@board[3][2] = "X")
-  		allow(@board[1][3] = "X")
+  		allow(@board[0][0] = "X")
+  		allow(@board[1][1] = "X")
+  		allow(@board[2][2] = "X")
+  		allow(@board[3][3] = "X")
   		expect(@cf.check_win).to eq @player1
   	end
 
